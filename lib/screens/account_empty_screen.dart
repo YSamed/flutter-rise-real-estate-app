@@ -93,7 +93,7 @@ class _AccountEmptyScreenState extends State<AccountEmptyScreen> {
                               "Location details",
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle1!
+                                  .titleMedium!
                                   .copyWith(color: AppColors.textPrimary),
                             )
                           ],

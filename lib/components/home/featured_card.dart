@@ -51,7 +51,7 @@ class FeaturedCard extends StatelessWidget {
                         category,
                         style: Theme.of(context)
                             .textTheme
-                            .subtitle1!
+                            .titleMedium!
                             .copyWith(color: AppColors.whiteColor),
                       ),
                     ),
@@ -65,7 +65,7 @@ class FeaturedCard extends StatelessWidget {
                 title,
                 style: Theme.of(context)
                     .textTheme
-                    .headline2!
+                    .displayMedium!
                     .copyWith(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Gap(isWidth: false, isHeight: true, height: height * 0.01),
@@ -89,7 +89,7 @@ class FeaturedCard extends StatelessWidget {
                     location,
                     style: Theme.of(context)
                         .textTheme
-                        .headline2!
+                        .displayMedium!
                         .copyWith(fontSize: 12),
                   )
                 ],
@@ -99,13 +99,13 @@ class FeaturedCard extends StatelessWidget {
                 children: [
                   Text(
                     "${format.currencySymbol} 290/",
-                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                    style: Theme.of(context).textTheme.headlineLarge!.copyWith(
                         color: AppColors.textPrimary,
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "month",
-                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                    style: Theme.of(context).textTheme.headlineLarge!.copyWith(
                         color: AppColors.textPrimary,
                         fontSize: 14,
                         fontWeight: FontWeight.bold),

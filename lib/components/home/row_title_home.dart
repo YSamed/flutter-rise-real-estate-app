@@ -20,7 +20,7 @@ class RowTitleHome extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.headline1!.copyWith(
+          style: Theme.of(context).textTheme.displayLarge!.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 25,
               color: AppColors.textPrimary),
@@ -31,7 +31,7 @@ class RowTitleHome extends StatelessWidget {
             subtitle,
             style: Theme.of(context)
                 .textTheme
-                .headline1!
+                .displayLarge!
                 .copyWith(color: const Color(0xff234F68), fontSize: 16),
           ),
         ),

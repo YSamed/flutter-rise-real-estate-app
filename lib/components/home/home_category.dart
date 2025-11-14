@@ -36,7 +36,7 @@ class _HomeCategoryState extends State<HomeCategory> {
             borderRadius: BorderRadius.circular(15)),
         child: Center(
           child: Text(widget.title,
-              style: Theme.of(context).textTheme.subtitle1!.copyWith(
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
                   color:
                       isActive ? AppColors.whiteColor : AppColors.textPrimary)),
         ),

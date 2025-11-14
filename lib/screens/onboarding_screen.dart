@@ -39,22 +39,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               OnboardView(
                   controller: controller,
                   title: "Find best place\nto stay in good price ",
-                  subtitle:
-                      "Lorem ipsum dolor sit amet, consectetur\nadipiscing elit, sed.",
+                  subtitle: "",
                   path: "lib/assets/1.png",
                   isLastPage: isLastPage),
               OnboardView(
                   controller: controller,
                   title: "Fast sell your property\nin just one click ",
-                  subtitle:
-                      "Lorem ipsum dolor sit amet, consectetur\nadipiscing elit, sed.",
+                  subtitle: "",
                   path: "lib/assets/2.png",
                   isLastPage: isLastPage),
               OnboardView(
                   controller: controller,
                   title: "Find perfect choice for\nyour future house ",
-                  subtitle:
-                      "Lorem ipsum dolor sit amet, consectetur\nadipiscing elit, sed.",
+                  subtitle: "",
                   path: "lib/assets/3.png",
                   isLastPage: isLastPage),
             ],

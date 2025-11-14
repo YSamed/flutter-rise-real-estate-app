@@ -69,7 +69,7 @@ class ExploreCard extends StatelessWidget {
               title,
               style: Theme.of(context)
                   .textTheme
-                  .headline5!
+                  .headlineMedium!
                   .copyWith(fontWeight: FontWeight.w600, fontSize: 18),
             ),
             Gap(isWidth: false, isHeight: true, height: height * 0.01),
@@ -95,7 +95,7 @@ class ExploreCard extends StatelessWidget {
                       location,
                       style: Theme.of(context)
                           .textTheme
-                          .headline2!
+                          .displayMedium!
                           .copyWith(fontSize: 12),
                     )
                   ],

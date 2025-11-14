@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:partice_project/constant/colors.dart';
-import 'package:partice_project/utils/helper.dart';
+import 'package:partice_project/services/storage_service.dart';
+import 'package:partice_project/utils/route_name.dart';
+import 'dart:async';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -10,12 +12,28 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Helper helper = Helper();
-
   @override
   void initState() {
     super.initState();
-    helper.isOnBoarding(context);
+    _checkAuthAndNavigate();
+  }
+
+  Future<void> _checkAuthAndNavigate() async {
+    // 2 saniye bekle (splash göster)
+    await Future.delayed(const Duration(seconds: 2));
+
+    if (!mounted) return;
+
+    // Auth kontrolü
+    final isLoggedIn = await StorageService.isLoggedIn();
+
+    if (isLoggedIn) {
+      // Kullanıcı giriş yapmış - ana ekrana yönlendir
+      Navigator.pushReplacementNamed(context, RoutesName.homeScreen);
+    } else {
+      // Kullanıcı giriş yapmamış - login ekranına yönlendir
+      Navigator.pushReplacementNamed(context, RoutesName.loginScreen);
+    }
   }
 
   @override
@@ -46,14 +64,14 @@ class _SplashScreenState extends State<SplashScreen> {
               "Rise",
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayLarge!
                   .copyWith(color: AppColors.whiteColor),
             ),
             Text(
               "Real Estate",
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayLarge!
                   .copyWith(color: AppColors.whiteColor),
             ),
           ],

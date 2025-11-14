@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:partice_project/components/gap.dart';
 import 'package:partice_project/constant/colors.dart';
 
 class PropertyCard extends StatelessWidget {
@@ -37,7 +36,7 @@ class PropertyCard extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.headline5!.copyWith(
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                 color: AppColors.whiteColor,
                 fontWeight: FontWeight.bold,
                 height: 1.2),
@@ -46,31 +45,9 @@ class PropertyCard extends StatelessWidget {
             subtitle,
             style: Theme.of(context)
                 .textTheme
-                .headline5!
+                .headlineMedium!
                 .copyWith(color: AppColors.whiteColor, fontSize: 12),
           ),
-          Gap(isWidth: false, isHeight: true, height: height * 0.02),
-          InkWell(
-            onTap: () {
-              print("cool");
-            },
-            child: Container(
-              width: 100,
-              height: 50,
-              decoration: BoxDecoration(
-                  color: AppColors.textPrimary,
-                  borderRadius: BorderRadius.circular(10)),
-              child: Center(
-                child: Text(
-                  "View",
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(color: AppColors.whiteColor),
-                ),
-              ),
-            ),
-          )
         ],
       ),
     );

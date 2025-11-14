@@ -18,7 +18,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   List<Widget> _buildScreen() {
     return [
-      HomeScreen(),
+      HomeScreen(
+        onProfileTap: () {
+          controller.jumpToTab(3);
+        },
+      ),
       SearchScreen(),
       FavouriteScreen(),
       AccountProfileScreen()

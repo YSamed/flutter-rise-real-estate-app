@@ -32,7 +32,7 @@ class TopLocation extends StatelessWidget {
             location,
             style: Theme.of(context)
                 .textTheme
-                .subtitle1!
+                .titleMedium!
                 .copyWith(color: AppColors.textPrimary, fontSize: 12),
           ),
           Gap(isWidth: true, isHeight: false, width: width * 0.02)

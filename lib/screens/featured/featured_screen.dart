@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:partice_project/components/app_input.dart';
 import 'package:partice_project/components/gap.dart';
 import 'package:partice_project/components/home/explore_card.dart';
-import 'package:partice_project/components/shared/screen.dart';
+import 'package:partice_project/components/home/featured_card.dart';
 import 'package:partice_project/constant/colors.dart';
+import 'package:partice_project/models/property_model.dart';
+import 'package:partice_project/models/auth_models.dart';
+import 'package:partice_project/services/property_service.dart';
 
 class FeaturedScreen extends StatefulWidget {
   const FeaturedScreen({super.key});
@@ -16,6 +18,44 @@ class FeaturedScreen extends StatefulWidget {
 class _FeaturedScreenState extends State<FeaturedScreen> {
   final searchInput = TextEditingController();
   final searchFocus = FocusNode();
+  List<Property> properties = [];
+  bool isLoading = true;
+  bool isGridView = false;
+  String? errorMessage;
+  String searchQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProperties();
+  }
+
+  Future<void> _loadProperties({String? search}) async {
+    setState(() {
+      isLoading = true;
+      errorMessage = null;
+    });
+
+    try {
+      final result = await PropertyService.getProperties(search: search);
+      setState(() {
+        properties = result;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        errorMessage = e is ApiError ? e.message : 'Bir hata oluştu';
+        isLoading = false;
+      });
+    }
+  }
+
+  void _onSearch(String value) {
+    setState(() {
+      searchQuery = value;
+    });
+    _loadProperties(search: value.isEmpty ? null : value);
+  }
 
   @override
   void dispose() {
@@ -28,173 +68,217 @@ class _FeaturedScreenState extends State<FeaturedScreen> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 1;
     final width = MediaQuery.of(context).size.width * 1;
-    return Screen(
-      isBackButton: true,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          StaggeredGrid.count(
-              crossAxisCount: 4,
-              mainAxisSpacing: 4,
-              crossAxisSpacing: 4,
-              children: [
-                StaggeredGridTile.count(
-                  crossAxisCellCount: 3,
-                  mainAxisCellCount: 2,
-                  child: imageContainer("lib/assets/images/slider.png"),
-                ),
-                StaggeredGridTile.count(
-                  crossAxisCellCount: 1,
-                  mainAxisCellCount: 1,
-                  child: imageContainer("lib/assets/images/slider1.png"),
-                ),
-                StaggeredGridTile.count(
-                  crossAxisCellCount: 1,
-                  mainAxisCellCount: 1,
-                  child: imageContainer("lib/assets/images/slider2.png"),
-                ),
-              ]),
-          Gap(
-            isWidth: false,
-            isHeight: true,
-            height: height * 0.02,
-          ),
-          Text(
-            "Featured Estates",
-            style: Theme.of(context)
-                .textTheme
-                .headline3!
-                .copyWith(color: AppColors.textPrimary),
-          ),
-          Gap(
-            isWidth: false,
-            isHeight: true,
-            height: height * 0.005,
-          ),
-          Text(
-            "Our recommended real estates exclusive for you.",
-            style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                fontSize: 12,
-                color: AppColors.seondaryTextColor,
-                fontWeight: FontWeight.w300),
-          ),
-          Gap(
-            isWidth: false,
-            isHeight: true,
-            height: height * 0.02,
-          ),
-          AppInput(
-              myController: searchInput,
-              focusNode: searchFocus,
-              onFiledSubmitedValue: (value) {},
-              keyBoardType: TextInputType.text,
-              leftIcon: true,
-              icon: Icon(Icons.search),
-              isFilled: true,
-              obscureText: false,
-              hinit: "Find location...",
-              onValidator: (value) {
-                if (value.isEmpty) return;
-              }),
-          Gap(
-            isWidth: false,
-            isHeight: true,
-            height: height * 0.03,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              RichText(
-                text: TextSpan(
-                  text: '70 ',
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                      color: AppColors.textPrimary),
-                  children: const <TextSpan>[
-                    TextSpan(
-                        text: 'estates',
-                        style: TextStyle(fontWeight: FontWeight.w400)),
-                  ],
-                ),
+              Text(
+                "İlanlar",
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall!
+                    .copyWith(color: AppColors.textPrimary),
               ),
-              Container(
-                width: width / 3.5,
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: AppColors.inputBackground,
-                    borderRadius: BorderRadius.circular(15)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Icon(
-                      Icons.filter_alt_outlined,
-                      size: 25,
-                      color: Color(0xffA1A5C1),
+              Gap(
+                isWidth: false,
+                isHeight: true,
+                height: height * 0.005,
+              ),
+              Gap(
+                isWidth: false,
+                isHeight: true,
+                height: height * 0.02,
+              ),
+              AppInput(
+                  myController: searchInput,
+                  focusNode: searchFocus,
+                  onFiledSubmitedValue: (value) => _onSearch(value ?? ''),
+                  onChanged: _onSearch,
+                  keyBoardType: TextInputType.text,
+                  leftIcon: true,
+                  icon: Icon(Icons.search),
+                  isFilled: true,
+                  isCompact: true,
+                  obscureText: false,
+                  hinit: "Konum, kategori veya ilan ara...",
+                  onValidator: (value) {
+                    return null;
+                  }),
+              Gap(
+                isWidth: false,
+                isHeight: true,
+                height: height * 0.03,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      text: '${properties.length} ',
+                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                          color: AppColors.textPrimary),
+                      children: const <TextSpan>[
+                        TextSpan(
+                            text: 'ilan',
+                            style: TextStyle(fontWeight: FontWeight.w400)),
+                      ],
                     ),
-                    Icon(
-                      Icons.table_bar,
-                      size: 25,
-                      color: Color(0xffA1A5C1),
+                  ),
+                  Container(
+                    width: width / 3.5,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: AppColors.inputBackground,
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            // TODO: Filter dialog
+                          },
+                          child: const Icon(
+                            Icons.filter_alt_outlined,
+                            size: 25,
+                            color: Color(0xffA1A5C1),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              isGridView = false;
+                            });
+                          },
+                          child: Icon(
+                            Icons.table_bar,
+                            size: 25,
+                            color: !isGridView
+                                ? AppColors.primaryColor
+                                : const Color(0xffA1A5C1),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              isGridView = true;
+                            });
+                          },
+                          child: Icon(
+                            Icons.view_agenda,
+                            size: 25,
+                            color: isGridView
+                                ? AppColors.primaryColor
+                                : const Color(0xffA1A5C1),
+                          ),
+                        ),
+                      ],
                     ),
-                    Icon(
-                      Icons.view_agenda,
-                      size: 25,
-                      color: AppColors.primaryColor,
-                    ),
-                  ],
-                ),
+                  )
+                ],
+              ),
+              Gap(
+                isWidth: false,
+                isHeight: true,
+                height: height * 0.03,
+              ),
+              Expanded(
+                child: _buildPropertyList(),
               )
             ],
           ),
-          Gap(
-            isWidth: false,
-            isHeight: true,
-            height: height * 0.03,
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: Wrap(
-              spacing: 20,
-              runSpacing: 17,
-              children: [
-                Row(
-                  children: const [
-                    ExploreCard(
-                      title: "Win The Tower",
-                      rating: "4.9",
-                      location: "Pabna Sadar",
-                      isHeart: false,
-                      path:
-                          "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=800",
-                    ),
-                    ExploreCard(
-                      title: "Townhouse Home",
-                      rating: "4.9",
-                      location: "Pabna Sadar",
-                      isHeart: false,
-                      path:
-                          "https://images.pexels.com/photos/87223/pexels-photo-87223.jpeg?auto=compress&cs=tinysrgb&w=800",
-                    ),
-                  ],
-                )
-              ],
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
 
-  imageContainer(path) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15),
-      child: Image(
-        fit: BoxFit.cover,
-        image: AssetImage(path),
-      ),
+  Widget _buildPropertyList() {
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (errorMessage != null) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              errorMessage!,
+              style: Theme.of(context).textTheme.titleMedium,
+              textAlign: TextAlign.center,
+            ),
+            Gap(isWidth: false, isHeight: true, height: 20),
+            ElevatedButton(
+              onPressed: () => _loadProperties(),
+              child: const Text('Tekrar Dene'),
+            ),
+          ],
+        ),
+      );
+    }
+
+    if (properties.isEmpty) {
+      return Center(
+        child: Text(
+          'İlan bulunamadı',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      );
+    }
+
+    if (isGridView) {
+      return GridView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.75,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
+        ),
+        itemCount: properties.length,
+        itemBuilder: (context, index) {
+          final property = properties[index];
+          return ExploreCard(
+            title: property.title,
+            rating: property.rating?.toStringAsFixed(1) ?? '0.0',
+            location: property.location,
+            path: property.imageUrl ??
+                property.images?.firstOrNull ??
+                'lib/assets/images/property.jpg',
+            isHeart: property.isFavorite ?? false,
+          );
+        },
+      );
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      itemCount: properties.length,
+      itemBuilder: (context, index) {
+        final property = properties[index];
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: FeaturedCard(
+            path: property.imageUrl ??
+                property.images?.firstOrNull ??
+                'lib/assets/images/property.jpg',
+            category: property.category,
+            title: property.title,
+            rating: property.rating?.toStringAsFixed(1) ?? '0.0',
+            location: property.location,
+            payment: property.price?.toStringAsFixed(0) ?? '0',
+          ),
+        );
+      },
     );
   }
 }

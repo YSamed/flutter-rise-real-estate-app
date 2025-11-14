@@ -5,6 +5,7 @@ class AppInput extends StatefulWidget {
   final TextEditingController myController;
   final FocusNode focusNode;
   final FormFieldSetter onFiledSubmitedValue;
+  final ValueChanged<String>? onChanged;
   final FormFieldValidator onValidator;
   final TextInputType keyBoardType;
   final String hinit;
@@ -14,13 +15,15 @@ class AppInput extends StatefulWidget {
       leftIcon,
       rightIcon,
       isFilled,
-      otherColor;
+      otherColor,
+      isCompact;
   final Icon icon;
   const AppInput(
       {Key? key,
       required this.myController,
       required this.focusNode,
       required this.onFiledSubmitedValue,
+      this.onChanged,
       required this.keyBoardType,
       required this.obscureText,
       required this.hinit,
@@ -31,7 +34,8 @@ class AppInput extends StatefulWidget {
       this.rightIcon = false,
       this.otherColor = false,
       this.enable = true,
-      this.autoFocus = false})
+      this.autoFocus = false,
+      this.isCompact = false})
       : super(key: key);
 
   @override
@@ -41,7 +45,9 @@ class AppInput extends StatefulWidget {
 class _AppInputState extends State<AppInput> {
   late bool passwordShow;
 
+  @override
   void initState() {
+    super.initState();
     passwordShow = widget.obscureText;
   }
 
@@ -52,14 +58,16 @@ class _AppInputState extends State<AppInput> {
       focusNode: widget.focusNode,
       obscureText: passwordShow,
       onFieldSubmitted: widget.onFiledSubmitedValue,
+      onChanged: widget.onChanged,
       validator: widget.onValidator,
       keyboardType: widget.keyBoardType,
       decoration: InputDecoration(
         fillColor: widget.otherColor
             ? AppColors.whiteColor
             : AppColors.inputBackground,
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 27.0, horizontal: 10.0),
+        contentPadding: widget.isCompact
+            ? const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0)
+            : const EdgeInsets.symmetric(vertical: 27.0, horizontal: 10.0),
         filled: widget.isFilled,
         hintText: widget.hinit,
         enabled: widget.enable,

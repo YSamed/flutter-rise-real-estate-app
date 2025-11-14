@@ -64,9 +64,13 @@ class _OtpCardState extends State<OtpCard> {
                   listenForMultipleSmsOnAndroid: true,
                   defaultPinTheme: defaultPinTheme,
                   validator: (value) {
-                    return value == '2222'
-                        ? null
-                        : 'Pin is incorrect. correct pin is 2222';
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter the OTP';
+                    }
+                    if (value.length < 4) {
+                      return 'OTP must be 4 digits';
+                    }
+                    return null;
                   },
                   // onClipboardFound: (value) {
                   //   debugPrint('onClipboardFound: $value');
@@ -124,13 +128,13 @@ class _OtpCardState extends State<OtpCard> {
                 children: [
                   Text(
                     "Didn’t receive the OTP? ",
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   InkWell(
                     onTap: () {},
                     child: Text(
                       "Resend OTP",
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: AppColors.textPrimary,
                           fontWeight: FontWeight.bold),
                     ),

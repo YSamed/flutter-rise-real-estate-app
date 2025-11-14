@@ -26,16 +26,16 @@ class AccordionApp extends StatelessWidget {
             contentBackgroundColor: AppColors.inputBackground,
             header: Text(
               'Why choose buy in Rise?',
-              style: Theme.of(context).textTheme.subtitle1!.copyWith(
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
                   color: AppColors.textPrimary,
                   fontWeight: FontWeight.bold,
                   fontSize: 16),
             ),
             content: Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. aliquip ex ea commodo consequat. Duis aute irure dolor.",
+                "",
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle1!
+                    .titleMedium!
                     .copyWith(color: AppColors.textPrimary, fontSize: 14)),
             contentHorizontalPadding: 20,
           ),
@@ -48,16 +48,16 @@ class AccordionApp extends StatelessWidget {
             contentBackgroundColor: AppColors.inputBackground,
             header: Text(
               'Why choose buy in Rise?',
-              style: Theme.of(context).textTheme.subtitle1!.copyWith(
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
                   color: AppColors.textPrimary,
                   fontWeight: FontWeight.bold,
                   fontSize: 16),
             ),
             content: Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. aliquip ex ea commodo consequat. Duis aute irure dolor.",
+                "",
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle1!
+                    .titleMedium!
                     .copyWith(color: AppColors.textPrimary, fontSize: 14)),
             contentHorizontalPadding: 20,
           ),

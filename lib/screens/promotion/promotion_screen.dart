@@ -22,7 +22,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
       child: Column(
         children: [
           const PropertyCard(
-            title: "Halloween\nSale!",
+            title: "",
             subtitle: "All discount up to 60%",
             path: "lib/assets/images/property.jpg",
             isBig: true,
@@ -31,10 +31,10 @@ class _PromotionScreenState extends State<PromotionScreen> {
           RichText(
             text: TextSpan(
               text: 'Limited time ',
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.displayMedium,
               children: const <TextSpan>[
                 TextSpan(
-                    text: 'Halloween Sale! ',
+                    text: '',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 TextSpan(text: 'is coming back! '),
               ],
@@ -86,14 +86,14 @@ class _PromotionScreenState extends State<PromotionScreen> {
                       "HLWN40",
                       style: Theme.of(context)
                           .textTheme
-                          .headline5!
+                          .headlineMedium!
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "Use this coupon to get 40% off on your transaction",
                       style: Theme.of(context)
                           .textTheme
-                          .headline5!
+                          .headlineMedium!
                           .copyWith(fontWeight: FontWeight.w300, fontSize: 11),
                     ),
                   ],
@@ -102,8 +102,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
             ),
           ),
           Gap(isWidth: false, isHeight: true, height: height * 0.02),
-          Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores")
+          Text("")
         ],
       ),
     );

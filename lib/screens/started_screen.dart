@@ -5,7 +5,7 @@ import 'package:partice_project/components/login_footer.dart';
 import 'package:partice_project/components/login_option.dart';
 import 'package:partice_project/constant/colors.dart';
 import 'package:partice_project/utils/route_name.dart';
-import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class StartedScreen extends StatefulWidget {
   const StartedScreen({super.key});
@@ -22,7 +22,7 @@ class _StartedScreenState extends State<StartedScreen> {
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.symmetric(
-              horizontal: 15, vertical: Platform.isIOS ? 0 : 15),
+              horizontal: 15, vertical: kIsWeb ? 15 : 15),
           child: Column(
             children: [
               Row(
@@ -45,11 +45,11 @@ class _StartedScreenState extends State<StartedScreen> {
                 children: [
                   Text(
                     "Ready to ",
-                    style: Theme.of(context).textTheme.headline2,
+                    style: Theme.of(context).textTheme.displayMedium,
                   ),
                   Text(
                     "explore?",
-                    style: Theme.of(context).textTheme.headline2!.copyWith(
+                    style: Theme.of(context).textTheme.displayMedium!.copyWith(
                         color: AppColors.textPrimary,
                         fontWeight: FontWeight.bold),
                   )

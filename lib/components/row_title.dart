@@ -44,7 +44,7 @@ class RowTitle extends StatelessWidget {
             title,
             style: Theme.of(context)
                 .textTheme
-                .subtitle1!
+                .titleMedium!
                 .copyWith(color: AppColors.faqColor, fontSize: 12),
           )
         ],

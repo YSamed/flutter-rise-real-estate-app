@@ -5,8 +5,10 @@ import 'package:partice_project/components/app_padding.dart';
 import 'package:partice_project/components/gap.dart';
 import 'package:partice_project/components/login_footer.dart';
 import 'package:partice_project/constant/colors.dart';
-import 'package:partice_project/utils/helper.dart';
 import 'package:partice_project/utils/route_name.dart';
+import 'package:provider/provider.dart';
+import 'package:partice_project/providers/auth_provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -31,10 +33,43 @@ class _LoginScreenState extends State<LoginScreen> {
     focusNodePassword.dispose();
   }
 
+  Future<void> _handleLogin() async {
+    if (_formkey.currentState!.validate()) {
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+      final success = await authProvider.login(
+        username: email.text.trim(),
+        password: password.text.trim(),
+      );
+
+      if (success && mounted) {
+        Fluttertoast.showToast(
+          msg: "Giriş başarılı!",
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+        );
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RoutesName.homeScreen,
+          (route) => false,
+        );
+      } else if (!success && mounted) {
+        final errorMsg = authProvider.errorMessage ?? 'Giriş başarısız';
+        Fluttertoast.showToast(
+          msg: errorMsg,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          toastLength: Toast.LENGTH_LONG,
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height * 1;
-    Helper helper = Helper();
+    final height = MediaQuery.of(context).size.height;
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -46,29 +81,19 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: [
                 Center(
-                  child: Container(
-                    child: const Image(
-                      width: 80,
-                      fit: BoxFit.cover,
-                      image: AssetImage("lib/assets/logo.png"),
-                    ),
+                  child: const Image(
+                    width: 80,
+                    fit: BoxFit.cover,
+                    image: AssetImage("lib/assets/logo.png"),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Let's ",
-                      style: Theme.of(context).textTheme.headline2,
-                    ),
-                    Text(
-                      "Sign In",
-                      style: Theme.of(context).textTheme.headline2!.copyWith(
-                          color: AppColors.textPrimary,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                Center(
+                  child: Text(
+                    "Giriş Yap",
+                    style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                        color: AppColors.textPrimary,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
                 Gap(isWidth: false, isHeight: true, height: height * 0.02),
                 Form(
@@ -79,19 +104,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           myController: email,
                           focusNode: focusNodeEmail,
                           onFiledSubmitedValue: (value) {
-                            print(value);
+                            focusNodePassword.requestFocus();
                           },
                           keyBoardType: TextInputType.emailAddress,
                           obscureText: false,
                           isFilled: true,
-                          hinit: "Enter Email",
+                          hinit: "Kullanıcı Adınızı Girin",
                           leftIcon: true,
-                          icon: const Icon(Icons.email),
+                          icon: const Icon(Icons.person),
                           onValidator: (value) {
-                            if (value.isEmpty)
-                              return 'Enter email';
-                            else if (!helper.emailValid(value))
-                              return "Enter invalid email";
+                            if (value.isEmpty) {
+                              return 'Kullanıcı adınızı girin';
+                            }
+                            return null;
                           }),
                       Gap(
                           isWidth: false,
@@ -101,19 +126,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           myController: password,
                           focusNode: focusNodePassword,
                           onFiledSubmitedValue: (value) {
-                            print(value);
+                            _handleLogin();
                           },
                           keyBoardType: TextInputType.text,
                           obscureText: true,
-                          hinit: "Enter Password",
+                          hinit: "Şifrenizi Girin",
                           leftIcon: true,
                           icon: const Icon(Icons.lock),
                           isFilled: true,
                           onValidator: (value) {
-                            if (value.isEmpty)
-                              return 'Enter Password';
-                            else if (value.length < 4)
-                              return "Password at least 6 characters ";
+                            if (value.isEmpty) {
+                              return 'Şifrenizi girin';
+                            }
+                            return null;
                           }),
                     ],
                   ),
@@ -127,8 +152,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           context, RoutesName.forgotPasswordScreen);
                     },
                     child: Text(
-                      "Forgot Password?",
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                      "Şifremi Unuttum?",
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: AppColors.textPrimary,
                           fontWeight: FontWeight.w600),
                     ),
@@ -136,14 +161,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Gap(isWidth: false, isHeight: true, height: height * 0.04),
                 AppButton(
-                  onPress: () {
-                    if (_formkey.currentState!.validate()) {
-                      print("okay");
-                      _formkey.currentState!.reset();
-                      Navigator.pushNamed(context, RoutesName.faqScreen);
-                    }
-                  },
-                  title: "Login",
+                  onPress: authProvider.isLoading
+                      ? () {}
+                      : () {
+                          _handleLogin();
+                        },
+                  loading: authProvider.isLoading,
+                  title: "Giriş Yap",
                   height: 63,
                   textColor: AppColors.whiteColor,
                 ),

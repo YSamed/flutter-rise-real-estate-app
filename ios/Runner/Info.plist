@@ -6,6 +6,11 @@
 <string>Rise Real Estate App Need Permisstion</string>
 <key>NSPhotoLibraryUsageDescription</key>
 <string>Rise Real Estate App Need Permisstion</string>
+<key>NSAppTransportSecurity</key>
+<dict>
+	<key>NSAllowsArbitraryLoads</key>
+	<true/>
+</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

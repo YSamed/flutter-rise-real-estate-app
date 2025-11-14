@@ -48,7 +48,7 @@ class LocationData extends StatelessWidget {
           ),
           Text(
             location,
-            style: Theme.of(context).textTheme.subtitle1!.copyWith(
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: isActive ? AppColors.whiteColor : AppColors.textPrimary,
                 fontSize: 14,
                 fontWeight: FontWeight.w400),

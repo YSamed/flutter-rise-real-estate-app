@@ -1,4 +1,6 @@
-import 'dart:io';
+import 'dart:io' if (dart.library.html) 'dart:html' as io;
+import 'dart:io' as io_file;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,16 +28,14 @@ class _AccountFormState extends State<AccountForm> {
   final focusNodeEmail = FocusNode();
   final focusNodePhone = FocusNode();
   final focusNodeFullName = FocusNode();
-  File? image;
+  dynamic image;
 
   Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
-      // ignore: unused_local_variable
-      final tempImage = File(image.path);
       setState(() {
-        this.image = tempImage;
+        this.image = image;
       });
     } on PlatformException catch (e) {
       print('Upload faild $e');
@@ -69,7 +69,9 @@ class _AccountFormState extends State<AccountForm> {
               CircleAvatar(
                 backgroundImage: image == null
                     ? AssetImage("lib/assets/logo.png")
-                    : FileImage(image!) as ImageProvider,
+                    : kIsWeb 
+                        ? NetworkImage(image.path) as ImageProvider
+                        : FileImage(io_file.File(image.path)) as ImageProvider,
               ),
               Positioned(
                   bottom: 0,

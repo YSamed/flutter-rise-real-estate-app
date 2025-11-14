@@ -19,7 +19,7 @@ class TopAgent extends StatelessWidget {
           name,
           style: Theme.of(context)
               .textTheme
-              .subtitle1!
+              .titleMedium!
               .copyWith(fontWeight: FontWeight.w400, fontSize: 14),
         )
       ],

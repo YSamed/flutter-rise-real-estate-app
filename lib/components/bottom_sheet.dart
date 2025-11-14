@@ -54,7 +54,7 @@ class BottomSheetModal extends StatelessWidget {
                               "Account ",
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline2!
+                                  .displayMedium!
                                   .copyWith(
                                     color: AppColors.textPrimary,
                                   ),
@@ -63,7 +63,7 @@ class BottomSheetModal extends StatelessWidget {
                               "successfully",
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline2!
+                                  .displayMedium!
                                   .copyWith(
                                       color: AppColors.textPrimary,
                                       fontWeight: FontWeight.bold),
@@ -73,7 +73,7 @@ class BottomSheetModal extends StatelessWidget {
                         Text(
                           "created",
                           style:
-                              Theme.of(context).textTheme.headline2!.copyWith(
+                              Theme.of(context).textTheme.displayMedium!.copyWith(
                                     color: AppColors.textPrimary,
                                   ),
                         ),
@@ -83,9 +83,9 @@ class BottomSheetModal extends StatelessWidget {
                           height: appHeight * 0.02,
                         ),
                         Text(
-                          "Lorem ipsum dolor sit amet, consectetur.",
+                          "",
                           style:
-                              Theme.of(context).textTheme.subtitle1!.copyWith(
+                              Theme.of(context).textTheme.titleMedium!.copyWith(
                                     color: AppColors.textPrimary,
                                   ),
                         ),

@@ -104,7 +104,7 @@ class _FaqScreenState extends State<FaqScreen> {
                                           child: Text("Buyer",
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .subtitle1)),
+                                                  .titleMedium)),
                                     ),
                                   ),
                                   Tab(
@@ -115,7 +115,7 @@ class _FaqScreenState extends State<FaqScreen> {
                                             "Estate Agent",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .subtitle1,
+                                                .titleMedium,
                                           )),
                                     ),
                                   ),

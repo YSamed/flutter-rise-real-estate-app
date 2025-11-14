@@ -57,7 +57,7 @@ class OnboardView extends StatelessWidget {
             child: Text(
               title,
               style:
-                  Theme.of(context).textTheme.headline3!.copyWith(height: 1.4),
+                  Theme.of(context).textTheme.displaySmall!.copyWith(height: 1.4),
             ),
           ),
           const Gap(
@@ -71,7 +71,7 @@ class OnboardView extends StatelessWidget {
               subtitle,
               style: Theme.of(context)
                   .textTheme
-                  .subtitle1!
+                  .titleMedium!
                   .copyWith(fontSize: 14, height: 1.4),
             ),
           ),

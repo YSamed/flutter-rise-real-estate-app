@@ -52,7 +52,7 @@ class LoginFooter extends StatelessWidget {
           children: [
             Text(
               "Dont't have an account?",
-              style: Theme.of(context).textTheme.subtitle1,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             InkWell(
               onTap: () {
@@ -60,7 +60,7 @@ class LoginFooter extends StatelessWidget {
               },
               child: Text(
                 " Register",
-                style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: AppColors.textPrimary, fontWeight: FontWeight.bold),
               ),
             ),

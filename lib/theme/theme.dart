@@ -3,62 +3,82 @@ import 'package:partice_project/constant/colors.dart';
 import 'package:partice_project/constant/fonts.dart';
 
 final appTheme = ThemeData(
-    primarySwatch: AppColors.primaryMaterialColor,
+    useMaterial3: true,
     scaffoldBackgroundColor: AppColors.whiteColor,
-    appBarTheme: const AppBarTheme(
-        color: AppColors.whiteColor,
+    colorScheme: ColorScheme.light(
+      primary: AppColors.primaryColor,
+      secondary: AppColors.secondaryColor,
+      surface: AppColors.whiteColor,
+      surfaceContainerHighest: AppColors.inputBackground, // background yerine
+      error: AppColors.alertColor,
+      onPrimary: AppColors.whiteColor,
+      onSecondary: AppColors.whiteColor,
+      onSurface: AppColors.textPrimary,
+      onError: AppColors.whiteColor,
+      outline: AppColors.textFieldDefaultBorderColor,
+      outlineVariant: AppColors.grayColor,
+    ),
+    appBarTheme: AppBarTheme(
+        backgroundColor: AppColors.whiteColor,
+        surfaceTintColor: Colors.transparent, // M3 tint istemiyorsanız bırakın
+        elevation: 0,
         centerTitle: true,
         titleTextStyle: TextStyle(
             fontSize: 22,
             fontFamily: AppFonts.latoRegular,
             color: AppColors.primaryColor)),
     textTheme: const TextTheme(
-      headline1: TextStyle(
+      displayLarge: TextStyle(
           fontSize: 40,
           fontFamily: AppFonts.latoRegular,
           color: AppColors.primaryTextTextColor,
           fontWeight: FontWeight.w500,
           height: 1.6),
-      headline2: TextStyle(
+      displayMedium: TextStyle(
           fontSize: 32,
           fontFamily: AppFonts.latoRegular,
           color: AppColors.textPrimary,
           fontWeight: FontWeight.w500,
           height: 1.6),
-      headline3: TextStyle(
+      displaySmall: TextStyle(
           fontSize: 28,
           fontFamily: AppFonts.latoRegular,
           color: AppColors.textPrimary,
           fontWeight: FontWeight.w500,
           height: 1.6),
-      headline4: TextStyle(
+      headlineLarge: TextStyle(
           fontSize: 24,
           fontFamily: AppFonts.latoRegular,
           color: AppColors.textPrimary,
           fontWeight: FontWeight.w500,
           height: 1.6),
-      headline5: TextStyle(
+      headlineMedium: TextStyle(
           fontSize: 20,
           fontFamily: AppFonts.latoRegular,
           color: AppColors.textPrimary,
           fontWeight: FontWeight.w500,
           height: 1.6),
-      headline6: TextStyle(
+      headlineSmall: TextStyle(
           fontSize: 17,
           fontFamily: AppFonts.latoBold,
           color: AppColors.textPrimary,
           height: 1.6),
-      bodyText1: TextStyle(
+      bodyLarge: TextStyle(
           fontSize: 17,
           fontFamily: AppFonts.latoRegular,
           color: AppColors.textPrimary,
           height: 1.6),
-      bodyText2: TextStyle(
+      bodyMedium: TextStyle(
           fontSize: 14,
           fontFamily: AppFonts.latoRegular,
           color: AppColors.textPrimary,
           height: 1.6),
-      caption: TextStyle(
+      titleMedium: TextStyle(
+          fontSize: 16,
+          fontFamily: AppFonts.latoRegular,
+          color: AppColors.textPrimary,
+          height: 1.6),
+      bodySmall: TextStyle(
           fontSize: 12,
           fontFamily: AppFonts.latoBold,
           color: AppColors.textPrimary,
